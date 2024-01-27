@@ -20,6 +20,73 @@ export default class BinaryTree {
     this.root = this.buildTreeRecursion(noDupeArray);
     return this.root;
   }
+
+  insert(value, root = this.root) {
+    if (root === null) return new Node(value);
+
+    if (value === root.data) return root;
+    if (value < root.data) root.left = this.insert(value, root.left);
+    if (value > root.data) root.right = this.insert(value, root.right);
+
+    return root;
+  }
+
+  delete(value, root = this.root) {
+    if (root === null) return null; // If doesn't exist
+
+    if (value < root.data) {
+      root.left = this.delete(value, root.left);
+      return root;
+    }
+    if (value > root.data) {
+      root.right = this.delete(value, root.right);
+      return root;
+    }
+
+    // Below here means value === this.root.data
+
+    if (root.left === null) return root.right;
+    if (root.right === null) return root.left;
+
+    if (root.left !== null && root.right !== null) {
+      let node = root.right;
+      let nodeParent = root;
+      while (node.left !== null) {
+        nodeParent = node;
+        node = node.left;
+      }
+      if (nodeParent === root) root.right = node.right;
+      else nodeParent.left = node.right;
+      node.left = root.left;
+      node.right = root.right;
+      if (root === this.root) this.root = node;
+      root = node;
+    }
+
+    return root;
+  }
+
+  find(value, root = this.root) {
+    if (value === root.data) return root;
+    if (value < root.data) return this.find(value, root.left);
+    if (value > root.data) return this.find(value, root.right);
+    return null;
+  }
+
+  levelOrderLoop(callback = null) {
+    const queue = [this.root];
+    let node = this.root;
+    let nodeArray = [];
+    while (queue.length > 0) {
+      node = queue.shift();
+      nodeArray.push(node);
+      if (node.left !== null) queue.push(node.left);
+      if (node.right !== null) queue.push(node.right);
+    }
+    if (callback !== null) nodeArray.forEach(callback);
+    else return nodeArray;
+  }
+
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
