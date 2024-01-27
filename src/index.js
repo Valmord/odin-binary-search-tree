@@ -23,5 +23,10 @@ tree.prettyPrint();
 console.log("find 7", tree.find(7));
 console.log("find 67", tree.find(67));
 
-console.log(tree.levelOrderLoop());
+console.log("Loop Breathorder", tree.levelOrderLoop());
+console.log("Recursion Breathorder", tree.levelOrderRecur());
 // console.log(tree.levelOrderLoop((node) => console.log(node))); // callback test
+
+console.log("Depth preorder", tree.preOrder());
+console.log("Depth inorder", tree.inOrder());
+console.log("Depth postorder", tree.postOrder());

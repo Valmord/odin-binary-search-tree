@@ -87,6 +87,82 @@ export default class BinaryTree {
     else return nodeArray;
   }
 
+  levelOrderRecur(callback = null) {
+    const queue = [this.root];
+    const nodeArray = [];
+
+    function recur(root) {
+      nodeArray.push(root);
+      if (root.left !== null) queue.push(root.left);
+      if (root.right !== null) queue.push(root.right);
+      if (queue.length === 0) return root;
+      recur(queue.shift());
+    }
+    recur(queue.shift());
+
+    if (callback !== null) nodeArray.forEach(callback);
+    else return nodeArray;
+  }
+
+  preOrder(callback = null) {
+    const nodeArray = [];
+
+    function recur(root) {
+      nodeArray.push(root);
+      if (root.left !== null) recur(root.left);
+      if (root.right !== null) recur(root.right);
+      return root;
+    }
+    recur(this.root);
+
+    if (callback !== null) nodeArray.forEach(callback);
+    else return nodeArray;
+  }
+
+  inOrder(callback = null) {
+    const nodeArray = [];
+
+    function recur(root) {
+      if (root.left !== null) recur(root.left);
+      nodeArray.push(root);
+      if (root.right !== null) recur(root.right);
+      return root;
+    }
+    recur(this.root);
+
+    if (callback !== null) nodeArray.forEach(callback);
+    else return nodeArray;
+  }
+
+  postOrder(callback = null) {
+    const nodeArray = [];
+
+    function recur(root) {
+      if (root.left !== null) recur(root.left);
+      if (root.right !== null) recur(root.right);
+      nodeArray.push(root);
+      return root;
+    }
+    recur(this.root);
+
+    if (callback !== null) nodeArray.forEach(callback);
+    else return nodeArray;
+  }
+  inOrder(callback = null) {
+    const nodeArray = [];
+
+    function recur(root) {
+      if (root.left !== null) recur(root.left);
+      nodeArray.push(root);
+      if (root.right !== null) recur(root.right);
+      return root;
+    }
+    recur(this.root);
+
+    if (callback !== null) nodeArray.forEach(callback);
+    else return nodeArray;
+  }
+
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
