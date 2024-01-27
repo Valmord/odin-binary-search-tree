@@ -21,6 +21,10 @@ export default class BinaryTree {
     return this.root;
   }
 
+  rebalance() {
+    this.buildTree(this.inOrder().map((node) => node.data));
+  }
+
   insert(value, root = this.root) {
     if (root === null) return new Node(value);
 
@@ -67,10 +71,10 @@ export default class BinaryTree {
   }
 
   find(value, root = this.root) {
-    if (value === root.data) return root;
+    if (root === null) return null;
     if (value < root.data) return this.find(value, root.left);
     if (value > root.data) return this.find(value, root.right);
-    return null;
+    return root;
   }
 
   levelOrderLoop(callback = null) {
@@ -161,6 +165,45 @@ export default class BinaryTree {
 
     if (callback !== null) nodeArray.forEach(callback);
     else return nodeArray;
+  }
+
+  height(node = this.root) {
+    if (node === null) return -1;
+    let left = this.height(node.left);
+    let right = this.height(node.right);
+    let max = Math.max(left, right) + 1;
+    return max;
+  }
+
+  depth(node = this.root) {
+    let count = 0;
+    let currentNode = this.root;
+    while (currentNode !== null && node !== null) {
+      if (node.data === currentNode.data) return count;
+      if (node.data < currentNode.data) {
+        currentNode = currentNode.left;
+        count += 1;
+      }
+      if (node.data > currentNode.data) {
+        currentNode = currentNode.right;
+        count += 1;
+      }
+    }
+    return -1;
+  }
+
+  isBalancedRecur(root = this.root) {
+    if (root === null) return 0;
+    let left = this.isBalancedRecur(root.left);
+    if (left === -1) return -1;
+    let right = this.isBalancedRecur(root.right);
+    if (right === -1) return -1;
+    if (Math.abs(left - right) >= 2) return -1;
+    return Math.max(left, right) + 1;
+  }
+
+  isBalanced(root = this.root) {
+    return this.isBalancedRecur(root) >= 0;
   }
 
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
