@@ -22,7 +22,7 @@ export default class BinaryTree {
   }
 
   rebalance() {
-    this.buildTree(this.inOrder().map((node) => node.data));
+    this.buildTree(this.inOrder());
   }
 
   insert(value, root = this.root) {
@@ -88,7 +88,7 @@ export default class BinaryTree {
       if (node.right !== null) queue.push(node.right);
     }
     if (callback !== null) nodeArray.forEach(callback);
-    else return nodeArray;
+    else return nodeArray.map((node) => node.data);
   }
 
   levelOrderRecur(callback = null) {
@@ -105,7 +105,7 @@ export default class BinaryTree {
     recur(queue.shift());
 
     if (callback !== null) nodeArray.forEach(callback);
-    else return nodeArray;
+    else return nodeArray.map((node) => node.data);
   }
 
   preOrder(callback = null) {
@@ -120,7 +120,7 @@ export default class BinaryTree {
     recur(this.root);
 
     if (callback !== null) nodeArray.forEach(callback);
-    else return nodeArray;
+    else return nodeArray.map((node) => node.data);
   }
 
   inOrder(callback = null) {
@@ -135,7 +135,7 @@ export default class BinaryTree {
     recur(this.root);
 
     if (callback !== null) nodeArray.forEach(callback);
-    else return nodeArray;
+    else return nodeArray.map((node) => node.data);
   }
 
   postOrder(callback = null) {
@@ -150,21 +150,7 @@ export default class BinaryTree {
     recur(this.root);
 
     if (callback !== null) nodeArray.forEach(callback);
-    else return nodeArray;
-  }
-  inOrder(callback = null) {
-    const nodeArray = [];
-
-    function recur(root) {
-      if (root.left !== null) recur(root.left);
-      nodeArray.push(root);
-      if (root.right !== null) recur(root.right);
-      return root;
-    }
-    recur(this.root);
-
-    if (callback !== null) nodeArray.forEach(callback);
-    else return nodeArray;
+    else return nodeArray.map((node) => node.data);
   }
 
   height(node = this.root) {
